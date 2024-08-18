@@ -1,8 +1,8 @@
-# React + Vite
+# Sound Wrap
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About 
+Sound Wrap is an ongoing project that leverages the React library to interact with and display data from Spotify's API. The project is designed to enhance user experience by recommending playlists based on the user's current mood and preferred music genres.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Objectives
+- **Current Objective:** Explore Spotify's API to understand the available data and how it can be utilized within the Sound Wrap application.
+- **Long-Term Vision:** Enable users to enter a desired genre, then analyze their playlists to suggest the most suitable one based on that genre.
