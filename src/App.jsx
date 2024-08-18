@@ -57,6 +57,40 @@ function App() {
     ))
   }
 
+  const getUserPlaylists = async () => {
+    const token = window.localStorage.getItem("token")
+  
+    try {
+      const { data } = await axios.get("https://api.spotify.com/v1/me/playlists", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      console.log(data.items);
+      const playlistId = data.items[0].id;
+      console.log("Playlist ID:", playlistId)
+    } catch (error) {
+      console.error("Error fetching playlists:", error)
+    }
+  };
+
+  const getPlaylistDetails = async (playlistId) => {
+    const token = window.localStorage.getItem("token")
+  
+    try {
+      const { data } = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+  
+      console.log(data); 
+    } catch (error) {
+      console.error("Error fetching playlist details:", error);
+    }
+  }
+
   return (
     <>
      <div className="App">
@@ -67,13 +101,17 @@ function App() {
             : <button onClick={logout}>Logout</button>
           }
         </header>
-        <form onSubmit={searchArtists}>
+        <form onSubmit={searchArtists} id="searchArtists">
           <input type="text" onChange={e => setSearchKey(e.target.value)}/>
           <button type={"submit"}>Search</button>
         </form>
         <div>
           {renderArtists()}
         </div>
+        {/*Currently only returns playlists to console*/}
+        <form onSubmit={getUserPlaylists} id="getPlaylists">
+          <button type={"submit"}>Get Playlists</button>
+        </form>
       </div>
     </>
   )
