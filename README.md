@@ -6,3 +6,7 @@ Sound Wrap is an ongoing project that leverages the React library to interact wi
 ## Objectives
 - **Current Objective:** Explore Spotify's API to understand the available data and how it can be utilized within the Sound Wrap application.
 - **Long-Term Vision:** Enable users to enter a desired genre, then analyze their playlists to suggest the most suitable one based on that genre.
+
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
