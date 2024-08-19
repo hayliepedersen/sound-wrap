@@ -11,6 +11,7 @@ function App() {
   const [token, setToken] = useState("")
   const [searchKey, setSearchKey] = useState("")
   const [artists, setArtists] = useState([])
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const hash = window.location.hash
@@ -49,7 +50,7 @@ function App() {
   }
 
   const renderArtists = () => {
-    return artists.map(artist => (
+    return artists.slice(0, 8).map(artist => (
         <div key={artist.id}>
             {artist.images.length ? <img width={"100%"} src={artist.images[0].url} alt=""/> : <div>No Image</div>}
             {artist.name}
@@ -91,6 +92,15 @@ function App() {
     }
   }
 
+  const updateSubmit = () => {
+    setIsSubmitted(true);   
+  };
+
+  const handleSubmit = (e) => {
+    searchArtists(e);
+    updateSubmit();
+  }
+
   return (
     <>
      <div className="App">
@@ -101,11 +111,14 @@ function App() {
             : <button onClick={logout}>Logout</button>
           }
         </header>
-        <form onSubmit={searchArtists} id="searchArtists">
+        <h2>Artist Reccomendation</h2>
+        {!isSubmitted && <p>Enter your favorite artist:</p>}
+        <form onSubmit={handleSubmit} id="searchArtists">
           <input type="text" onChange={e => setSearchKey(e.target.value)}/>
           <button type={"submit"}>Search</button>
         </form>
-        <div>
+        {isSubmitted && <p>You may also like: </p>}
+        <div className="artistImages">
           {renderArtists()}
         </div>
         {/*Currently only returns playlists to console*/}
