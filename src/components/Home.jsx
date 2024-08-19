@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios'
 
 function Home() {
-  const [searchKey, setSearchKey] = useState("")
-  const [artists, setArtists] = useState([])
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [searchKey, setSearchKey] = useState("");
+  const [artists, setArtists] = useState([]);
+  const [playlist, setPlaylist] = useState();
+  const [playlists, setPlaylists] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const searchArtists = async (e) => {
     e.preventDefault()
@@ -40,10 +42,9 @@ function Home() {
           Authorization: `Bearer ${token}`
         }
       });
-  
-      console.log(data.items);
-      const playlistId = data.items[0].id;
-      console.log("Playlist ID:", playlistId)
+
+      setPlaylists(data.items);
+
     } catch (error) {
       console.error("Error fetching playlists:", error)
     }
@@ -58,8 +59,9 @@ function Home() {
           Authorization: `Bearer ${token}`
         }
       })
+
+      console.log(data)
   
-      console.log(data); 
     } catch (error) {
       console.error("Error fetching playlist details:", error)
     }
@@ -74,26 +76,34 @@ function Home() {
     updateSubmit()
   }
 
-    return (
-        <>
-         <div className="Home">
-            <h2>Artist Reccomendation</h2>
-            {!isSubmitted && <p>Enter your favorite artist:</p>}
-            <form onSubmit={handleSubmit} id="searchArtists">
-              <input type="text" onChange={e => setSearchKey(e.target.value)}/>
-              <button type={"submit"}>Search</button>
-            </form>
-            {isSubmitted && <p>You may also like: </p>}
-            <div className="artistImages">
-              {renderArtists()}
-            </div>
-            {/*Currently only returns playlists to console*/}
-            <form onSubmit={getUserPlaylists} id="getPlaylists">
-              <button type={"submit"}>Get Playlists</button>
-            </form>
-          </div>
-        </>
-      )
+  useEffect(() => {
+    if (playlists.length > 0) {
+      const playlistId = playlists[0].id;
+      getPlaylistDetails(playlistId);
+      console.log(playlists)
+    }
+  }, [playlists]);
+  
+  return (
+    <>
+      <div className="Home">
+        <h2>Artist Reccomendation</h2>
+        {!isSubmitted && <p>Enter your favorite artist:</p>}
+        <form onSubmit={handleSubmit} id="searchArtists">
+          <input type="text" onChange={e => setSearchKey(e.target.value)}/>
+          <button type={"submit"}>Search</button>
+        </form>
+        {isSubmitted && <p>You may also like: </p>}
+        <div className="artistImages">
+          {renderArtists()}
+        </div>
+          {/*Currently only returns playlists to console*/}
+          <form onSubmit={getUserPlaylists} id="getPlaylists">
+            <button type={"submit"}>Get Playlists</button>
+          </form>
+        </div>
+    </>
+  )
 }
 
 export default Home;
