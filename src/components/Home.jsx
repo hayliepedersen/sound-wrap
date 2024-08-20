@@ -4,13 +4,14 @@ import axios from 'axios'
 function Home() {
   const [searchKey, setSearchKey] = useState("");
   const [artists, setArtists] = useState([]);
-  const [playlist, setPlaylist] = useState();
   const [playlists, setPlaylists] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Search artists based off of query
   const searchArtists = async (e) => {
     e.preventDefault()
     const token = window.localStorage.getItem("token")
+
     const {data} = await axios.get("https://api.spotify.com/v1/search", {
       headers: {
         Authorization: `Bearer ${token}`
@@ -24,6 +25,12 @@ function Home() {
     setArtists(data.artists.items)
   }
 
+  const handleSubmit = (e) => {
+    searchArtists(e)
+    setIsSubmitted(true)
+  }
+
+  // Display the reccomended artists to the user
   const renderArtists = () => {
     return artists.slice(0, 8).map(artist => (
         <div key={artist.id}>
@@ -33,7 +40,10 @@ function Home() {
     ))
   }
 
-  const getUserPlaylists = async () => {
+  // -----------------
+
+  // Get all of the user's playlists
+  const getPlaylists = async () => {
     const token = window.localStorage.getItem("token")
   
     try {
@@ -50,7 +60,8 @@ function Home() {
     }
   };
 
-  const getPlaylistDetails = async (playlistId) => {
+  // Get a specific playlist from an array of playlist
+  const getPlaylist = async (playlistId) => {
     const token = window.localStorage.getItem("token")
   
     try {
@@ -67,20 +78,30 @@ function Home() {
     }
   }
 
-  const updateSubmit = () => {
-    setIsSubmitted(true) 
+  // Get all tracks from a specific playlist
+  const getPlaylistTracks = async (playlistId) => {
+    const token = window.localStorage.getItem("token");
+  
+    try {
+      const { data } = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      console.log(data.items)
+
+    } catch (error) {
+      console.error("Error fetching playlist tracks");
+    }
   };
 
-  const handleSubmit = (e) => {
-    searchArtists(e)
-    updateSubmit()
-  }
-
+  // Update the arrays of playlists
   useEffect(() => {
     if (playlists.length > 0) {
       const playlistId = playlists[0].id;
-      getPlaylistDetails(playlistId);
-      console.log(playlists)
+      getPlaylist(playlistId);
+      getPlaylistTracks(playlistId);
     }
   }, [playlists]);
   
@@ -98,7 +119,7 @@ function Home() {
           {renderArtists()}
         </div>
           {/*Currently only returns playlists to console*/}
-          <form onSubmit={getUserPlaylists} id="getPlaylists">
+          <form onSubmit={getPlaylists} id="getPlaylists">
             <button type={"submit"}>Get Playlists</button>
           </form>
         </div>
