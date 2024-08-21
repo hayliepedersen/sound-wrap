@@ -66,8 +66,7 @@ function Home() {
     }
   };
 
-  // Need to handle inputting a genre
-  const searchPlaylistsForTracks = async (inputGenre) => {
+  const searchPlaylistsForTracks = async () => {
     // For every playlist in playlists get the tracks using the playlist id
     for (const playlistKey in playlists) {
       const playlist = playlists[playlistKey];
@@ -76,7 +75,8 @@ function Home() {
     }
   };
 
-  const searchTracksForArtists = async () => {
+  const searchTracksForArtists = async (inputGenre) => {
+    await searchPlaylistsForTracks();
     const genreMatches = [];
 
     // For every track in the pulled track objects
@@ -127,7 +127,7 @@ function Home() {
         </form>
 
         {/*This will run the function using the inputted text*/}
-        <form onSubmit={() => searchPlaylistsForTracks(inputGenre)}>
+        <form onSubmit={() => searchTracksForArtists(inputGenre)}>
           <input
             type="text"
             placeholder="Enter genre"
