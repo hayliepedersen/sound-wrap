@@ -66,19 +66,24 @@ function Home() {
 
 // Need to handle inputting a genre
 const searchPlaylistsForArtistGenres = async (inputGenre) => {
-    const playlists = await getPlaylists();
+    // const playlists = await getPlaylists();
     // Initializing an empty array
     const genreMatches = [];
+    console.log(playlists)
 
     // For every playlist in playlists get the tracks using the playlist id
-    for (const playlist in playlists) {
+    for (const playlistKey in playlists) {
+        const playlist = playlists[playlistKey]; // Access the playlist object
+        console.log(playlist.id);
         const tracks = await getPlaylistTracks(playlist.id);
-        console.log(tracks)
+
 
         // For every track in the playlist
-        for (const track in tracks) {
+        for (const trackKey in tracks) {
+            const track = tracks[trackKey]; // Access the track object
             const artistId = track.track.artists[0].id; // Assuming the first artist is the one you need
             const artist = await getArtistDetails(artistId);
+
 
             if (artist && artist.genres) {
                 // Check if any genre matches the input genre
@@ -97,23 +102,20 @@ const searchPlaylistsForArtistGenres = async (inputGenre) => {
     console.log("Genre Matches:", genreMatches);
 };
 
-  // Update the arrays of playlists
+  // Update the arrays of playlists 
   useEffect(() => {
     if (playlists.length > 0) {
       console.log(playlists)
+      setPlaylists(playlists)
       // Eventually this will be the playlistID of the playlist with the most amount of tracks
       // by artists with the inputted genre
+      /*
       const playlistId = playlists[0].id;
       // This then returns the tracks of that playlist
       getPlaylistTracks(playlistId);
+      */
     }
   }, [playlists]);
-
-  useEffect(() => {
-    if (genreMatches.length > 0) {
-      console.log(genreMatches)
-    }
-  }, [genreMatches]);
 
   // ------------------- to here --------------------
   
@@ -128,7 +130,7 @@ const searchPlaylistsForArtistGenres = async (inputGenre) => {
         </form>
         
         {/*This will run the function using the inputted text*/}
-        <form onSubmit={searchPlaylistsForArtistGenres}>
+        <form onSubmit={() => searchPlaylistsForArtistGenres(inputGenre)}>
             <input 
                 type="text" 
                 placeholder="Enter genre" 
