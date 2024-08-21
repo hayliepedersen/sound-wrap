@@ -4,11 +4,12 @@ import Artists from './Artists'
 
 function Home() {
   const [playlists, setPlaylists] = useState([]);
+  const [tracks, setTracks] = useState([]);
   const [inputGenre, setInputGenre] = useState(""); 
-  const [genreMatches, setGenreMatches] = useState([]); 
 
   // Get all of the user's playlists
-  const getPlaylists = async () => {
+  const getPlaylists = async (e) => {
+    e.preventDefault()
     const token = window.localStorage.getItem("token")
   
     try {
@@ -18,7 +19,8 @@ function Home() {
         }
       });
 
-      setPlaylists(data.items);
+      console.log(data.items)
+      setPlaylists(data.items)
 
     } catch (error) {
       console.error("Error fetching playlists:", error)
@@ -35,8 +37,9 @@ function Home() {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       console.log(data.items)
+      setTracks(data.items)
 
     } catch (error) {
       console.error("Error fetching playlist tracks");
@@ -62,28 +65,22 @@ function Home() {
     }
 };
 
-// ---------------- Need to fix from here ---------------
-
 // Need to handle inputting a genre
-const searchPlaylistsForArtistGenres = async (inputGenre) => {
-    // const playlists = await getPlaylists();
-    // Initializing an empty array
+const searchPlaylistsForArtistGenres = async (inputGenre) => { 
     const genreMatches = [];
-    console.log(playlists)
 
     // For every playlist in playlists get the tracks using the playlist id
     for (const playlistKey in playlists) {
-        const playlist = playlists[playlistKey]; // Access the playlist object
+        const playlist = playlists[playlistKey]; 
         console.log(playlist.id);
         const tracks = await getPlaylistTracks(playlist.id);
 
-
-        // For every track in the playlist
+        // For every track in the pulled track objects
         for (const trackKey in tracks) {
-            const track = tracks[trackKey]; // Access the track object
-            const artistId = track.track.artists[0].id; // Assuming the first artist is the one you need
+            const track = tracks[trackKey];
+            const artistId = track.track.artists[0].id; 
             const artist = await getArtistDetails(artistId);
-
+            console.log(artist)
 
             if (artist && artist.genres) {
                 // Check if any genre matches the input genre
@@ -100,24 +97,21 @@ const searchPlaylistsForArtistGenres = async (inputGenre) => {
     }
 
     console.log("Genre Matches:", genreMatches);
-};
+  };
 
   // Update the arrays of playlists 
   useEffect(() => {
     if (playlists.length > 0) {
-      console.log(playlists)
       setPlaylists(playlists)
-      // Eventually this will be the playlistID of the playlist with the most amount of tracks
-      // by artists with the inputted genre
-      /*
-      const playlistId = playlists[0].id;
-      // This then returns the tracks of that playlist
-      getPlaylistTracks(playlistId);
-      */
     }
   }, [playlists]);
 
-  // ------------------- to here --------------------
+  // Updates tracks
+  useEffect(() => {
+    if (tracks.length > 0) {
+      setTracks(tracks)
+    }
+  }, [tracks]);
   
   return (
     <>
