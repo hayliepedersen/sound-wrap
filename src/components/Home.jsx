@@ -4,7 +4,7 @@ import Artists from './Artists'
 
 function Home() {
   const [playlists, setPlaylists] = useState([]);
-  const [tracks, setTracks] = useState([]);
+  const [tracks, setTracks] = useState({});
   const [inputGenre, setInputGenre] = useState("");
   const [genreMatches, setGenreMatches] = useState([]);
 
@@ -66,68 +66,64 @@ function Home() {
     }
   };
 
+  // For every playlist in playlists gets the tracks using the playlist id
   const searchPlaylistsForTracks = async () => {
-    // For every playlist in playlists get the tracks using the playlist id
+    let allTracks = {}; // Object to store all tracks
+
     for (const playlistKey in playlists) {
-      const playlist = playlists[playlistKey];
-      console.log(playlist.id);
-      await getPlaylistTracks(playlist.id);
+        const playlist = playlists[playlistKey];
+        const playlistTracks = await getPlaylistTracks(playlist.id);
+
+        allTracks = { ...allTracks, ...playlistTracks }; // Merging tracks from each playlist
     }
-  };
 
-  const searchTracksForArtists = async (inputGenre) => {
-    await searchPlaylistsForTracks();
-    const genreMatches = [];
+    setTracks(allTracks); // Set the tracks state once all tracks are fetched
+};
 
-    // For every track in the pulled track objects
-    for (const trackKey in tracks) {
+const searchTracksForArtists = async (inputGenre) => {
+  const genreMatches = [];
+
+  for (const trackKey in tracks) {
       const track = tracks[trackKey];
       const artistId = track.track.artists[0].id;
       const artist = await getArtistDetails(artistId);
-      console.log(artist)
 
       if (artist && artist.genres) {
-        // Check if any genre matches the input genre
-        if (artist.genres.some(genre => genre.toLowerCase().includes(inputGenre.toLowerCase()))) {
-          genreMatches.push({
-            playlist: playlist.name,
-            track: track.track.name,
-            artist: artist.name,
-            genres: artist.genres
-          });
-        }
+          // Check if any genre matches the input genre
+          if (artist.genres.some(genre => genre.toLowerCase().includes(inputGenre.toLowerCase()))) {
+              genreMatches.push({
+                  playlist: tracks[trackKey].playlist.name, // Ensure playlist name is accessible here
+                  track: track.track.name,
+                  artist: artist.name,
+                  genres: artist.genres
+              });
+          }
       }
-    }
-    console.log("Genre Matches:", genreMatches);
-    setGenreMatches(genreMatches);
   }
 
-  // Update the arrays of playlists 
+  setGenreMatches(genreMatches); // Update the state with the matching genres
+};
+
+// To be called when the input is submitted
+const handleSearch = async (e) => {
+  await getPlaylists(e);
+  searchTracksForArtists(e);
+};
+
+  // Handles playlists
   useEffect(() => {
     if (playlists.length > 0) {
       setPlaylists(playlists)
+      searchPlaylistsForTracks();
     }
   }, [playlists]);
-
-  // Updates tracks
-  useEffect(() => {
-    if (tracks.length > 0) {
-      setTracks(tracks)
-    }
-  }, [tracks]);
 
   return (
     <>
       <div className="Home">
         < Artists />
-
-        {/*Currently only returns playlists to console*/}
-        <form onSubmit={getPlaylists} id="getPlaylists">
-          <button type={"submit"}>Get Playlists</button>
-        </form>
-
         {/*This will run the function using the inputted text*/}
-        <form onSubmit={() => searchTracksForArtists(inputGenre)}>
+        <form onSubmit={(inputGenre) => handleSearch(inputGenre)}>
           <input
             type="text"
             placeholder="Enter genre"
