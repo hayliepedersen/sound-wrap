@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import Home from './components/Home'
+import Artists from './components/Artists'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   const CLIENT_ID = "bf129aa3857d4267b7c4577497863ede"
@@ -36,7 +38,7 @@ function App() {
 
   return (
     <>
-     <div className="App">
+      <div className="App">
         <header className="App-header">
           <h1>Sound Wrap</h1>
           {!token ?
@@ -44,7 +46,14 @@ function App() {
             : <button onClick={logout}>Logout</button>
           }
         </header>
-        {isAuthenticated && <Home />}
+        {isAuthenticated && 
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/artists" element={<Artists />} />
+          </Routes>
+        </Router>
+        }
       </div>
     </>
   )

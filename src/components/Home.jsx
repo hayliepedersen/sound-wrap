@@ -4,7 +4,7 @@ import Artists from './Artists'
 
 function Home() {
   const [playlists, setPlaylists] = useState([]);
-  const [tracks, setTracks] = useState({});
+  const [tracks, setTracks] = useState([]);
   const [inputGenre, setInputGenre] = useState("");
   const [genreMatches, setGenreMatches] = useState([]);
 
@@ -66,49 +66,50 @@ function Home() {
     }
   };
 
-  // For every playlist in playlists gets the tracks using the playlist id
+  // For every playlist in playlists, gets the tracks using the playlist id
   const searchPlaylistsForTracks = async () => {
-    let allTracks = {}; // Object to store all tracks
+    let allTracks = {};
 
     for (const playlistKey in playlists) {
-        const playlist = playlists[playlistKey];
-        const playlistTracks = await getPlaylistTracks(playlist.id);
+      const playlist = playlists[playlistKey];
+      const playlistTracks = await getPlaylistTracks(playlist.id);
 
-        allTracks = { ...allTracks, ...playlistTracks }; // Merging tracks from each playlist
+      allTracks = { ...allTracks, ...playlistTracks };
     }
 
-    setTracks(allTracks); // Set the tracks state once all tracks are fetched
-};
+    setTracks(allTracks);
+  };
 
-const searchTracksForArtists = async (inputGenre) => {
-  const genreMatches = [];
+  const searchTracksForArtists = async (inputGenre) => {
+    const genreMatches = [];
 
-  for (const trackKey in tracks) {
+    for (const trackKey in tracks) {
       const track = tracks[trackKey];
       const artistId = track.track.artists[0].id;
       const artist = await getArtistDetails(artistId);
+      console.log(artist)
 
       if (artist && artist.genres) {
-          // Check if any genre matches the input genre
-          if (artist.genres.some(genre => genre.toLowerCase().includes(inputGenre.toLowerCase()))) {
-              genreMatches.push({
-                  playlist: tracks[trackKey].playlist.name, // Ensure playlist name is accessible here
-                  track: track.track.name,
-                  artist: artist.name,
-                  genres: artist.genres
-              });
-          }
+        // Check if any genre matches the input genre
+        if (artist.genres.some(genre => genre.toLowerCase().includes(inputGenre.toLowerCase()))) {
+          genreMatches.push({
+            playlist: tracks[trackKey].playlist.name,
+            track: track.track.name,
+            artist: artist.name,
+            genres: artist.genres
+          });
+        }
       }
-  }
+    }
 
-  setGenreMatches(genreMatches); // Update the state with the matching genres
-};
+    setGenreMatches(genreMatches);
+  };
 
-// To be called when the input is submitted
-const handleSearch = async (e) => {
-  await getPlaylists(e);
-  searchTracksForArtists(e);
-};
+  // To be called when the input is submitted
+  const handleSearch = async (e) => {
+    await getPlaylists(e);
+    searchTracksForArtists(e);
+  };
 
   // Handles playlists
   useEffect(() => {
@@ -121,7 +122,7 @@ const handleSearch = async (e) => {
   return (
     <>
       <div className="Home">
-        < Artists />
+        {/*< Artists />*/}
         {/*This will run the function using the inputted text*/}
         <form onSubmit={(inputGenre) => handleSearch(inputGenre)}>
           <input
