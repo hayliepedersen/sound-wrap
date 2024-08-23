@@ -28,14 +28,15 @@
   border-radius: 8px; 
 }
 
-/* .icon-container {
+body {
   position: relative;
-} */
+} 
 
-/* .user-icon {
+.user-icon {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 2%;
-  height: auto;
-} */
+  top: 10px;
+  right: 10px;
+  width: 3%;
+  height: auto; 
+  border-radius: 50px;
+}
