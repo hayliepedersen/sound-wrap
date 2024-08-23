@@ -124,7 +124,6 @@ function Home() {
   return (
     <>
       <div className="Home">
-        {/*< Artists />*/}
         <Link to={"./Artists"} element={<Artists />}>Artists</Link >
         {/*This will run the function using the inputted text*/}
         <form onSubmit={(inputGenre) => handleSearch(inputGenre)}>
