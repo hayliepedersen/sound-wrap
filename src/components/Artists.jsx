@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
+import Home from './Home'
 
 function Artists() {
   const [searchKey, setSearchKey] = useState("");
@@ -43,6 +45,7 @@ function Artists() {
   return (
     <>
       <div className="Artists">
+        <Link to={"/"}>Home</Link >
         <h2>Artist Reccomendation</h2>
         {!isSubmitted && <p>Enter your favorite artist:</p>}
         <form onSubmit={handleSubmit} id="searchArtists">

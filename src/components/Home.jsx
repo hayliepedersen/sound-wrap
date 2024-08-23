@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
-import Artists from './Artists'
 import { Link } from 'react-router-dom';
 
 
@@ -124,7 +123,7 @@ function Home() {
   return (
     <>
       <div className="Home">
-        <Link to={"./Artists"} element={<Artists />}>Artists</Link >
+        <Link to={"./Artists"}>Artist Reccomendation</Link >
         {/*This will run the function using the inputted text*/}
         <form onSubmit={(inputGenre) => handleSearch(inputGenre)}>
           <input

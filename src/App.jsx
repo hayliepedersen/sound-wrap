@@ -12,6 +12,7 @@ function App() {
 
   const [token, setToken] = useState("")
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [profileUrl, setProfileUrl] = useState("")
 
   useEffect(() => {
     const hash = window.location.hash
@@ -28,6 +29,36 @@ function App() {
     setIsAuthenticated(true)
 
   }, [])
+
+  useEffect(() => {
+    let accessToken = window.localStorage.getItem("token")
+
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch('https://api.spotify.com/v1/me', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        const profileImageUrl = data.images && data.images.length > 0
+          ? data.images[0].url
+          : null;
+
+        setProfileUrl(profileImageUrl);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   const logout = () => {
     setToken("");
@@ -46,13 +77,18 @@ function App() {
             : <button onClick={logout}>Logout</button>
           }
         </header>
-        {isAuthenticated && 
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/artists" element={<Artists />} />
-          </Routes>
-        </Router>
+        {isAuthenticated &&
+          <>
+            <div className="icon-container">
+              <img src={profileUrl} alt="User Icon" className="user-icon" />
+            </div>
+            <Router>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/artists" element={<Artists />} />
+              </Routes>
+            </Router>
+          </>
         }
       </div>
     </>
