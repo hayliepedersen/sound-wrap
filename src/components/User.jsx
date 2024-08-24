@@ -10,21 +10,15 @@ function User() {
 
     const fetchUserProfile = async () => {
       try {
-        const { response } = await axios.get('https://api.spotify.com/v1/me', {
+        const response = await axios.get('https://api.spotify.com/v1/me', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        const profileImageUrl = response.data.images[0].url
 
-        const data = await response.json();
-
-        const profileImageUrl = data.images && data.images.length > 0
-          ? data.images[0].url
-          : null;
+        console.log(profileImageUrl)
 
         setProfileUrl(profileImageUrl);
       } catch (error) {
