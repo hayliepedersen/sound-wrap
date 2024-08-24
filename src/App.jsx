@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css'
 import Home from './components/Home'
 import Artists from './components/Artists'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import User from './components/User' 
 
 function App() {
   const CLIENT_ID = "bf129aa3857d4267b7c4577497863ede"
@@ -12,7 +13,6 @@ function App() {
 
   const [token, setToken] = useState("")
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [profileUrl, setProfileUrl] = useState("")
 
   useEffect(() => {
     const hash = window.location.hash
@@ -29,36 +29,6 @@ function App() {
     setIsAuthenticated(true)
 
   }, [])
-
-  useEffect(() => {
-    let accessToken = window.localStorage.getItem("token")
-
-    const fetchUserProfile = async () => {
-      try {
-        const response = await fetch('https://api.spotify.com/v1/me', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        const profileImageUrl = data.images && data.images.length > 0
-          ? data.images[0].url
-          : null;
-
-        setProfileUrl(profileImageUrl);
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-
-    fetchUserProfile();
-  }, []);
 
   const logout = () => {
     setToken("");
@@ -77,20 +47,18 @@ function App() {
             : <button onClick={logout}>Logout</button>
           }
         </header>
-        {isAuthenticated &&
-          <>
-            <div className="icon-container">
-              <img src={profileUrl} alt="User Icon" className="user-icon" />
-            </div>
-            <Router>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/artists" element={<Artists />} />
-              </Routes>
-            </Router>
-          </>
-        }
       </div>
+      {isAuthenticated &&
+        <>
+          {<User />}
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/artists" element={<Artists />} />
+            </Routes>
+          </Router>
+        </>
+      }
     </>
   )
 }
