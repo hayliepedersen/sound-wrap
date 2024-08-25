@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios'
 import './App.css'
 import Home from './components/Home'
@@ -72,13 +72,6 @@ function App() {
       setProfileClicked(false);
     }
   };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   return (
     <>
