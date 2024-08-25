@@ -57,7 +57,7 @@ function User() {
       </div>
       {profileClicked && (
         <div className="dropdown-content">
-          <p>Option 1</p>
+          <div className='square'></div>
         </div>
       )}
     </>
