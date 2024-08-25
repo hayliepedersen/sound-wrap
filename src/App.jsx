@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import axios from 'axios'
 import './App.css'
 import Home from './components/Home'
 import Artists from './components/Artists'
-import User from './components/User' 
 
 function App() {
   const CLIENT_ID = "bf129aa3857d4267b7c4577497863ede"
@@ -13,6 +13,10 @@ function App() {
 
   const [token, setToken] = useState("")
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [profileUrl, setProfileUrl] = useState("")
+  const [profileClicked, setProfileClicked] = useState(false)
+  const dropdownRef = useRef(null);
+
 
   useEffect(() => {
     const hash = window.location.hash
@@ -37,6 +41,45 @@ function App() {
     setIsAuthenticated(false)
   }
 
+  useEffect(() => {
+    const token = window.localStorage.getItem("token")
+
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get('https://api.spotify.com/v1/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const profileImageUrl = response.data.images[0].url
+
+        setProfileUrl(profileImageUrl);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  const toggleDropdown = () => {
+    setProfileClicked(!profileClicked);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setProfileClicked(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <div className="App">
@@ -50,7 +93,20 @@ function App() {
       </div>
       {isAuthenticated &&
         <>
-          {<User />}
+          <div className="icon-container" ref={dropdownRef}>
+            <img
+              src={profileUrl}
+              alt="User Icon"
+              className="user-icon"
+              onClick={toggleDropdown}
+            />
+          </div>
+          {profileClicked && (
+            <div className="dropdown-content">
+              <div className='square'></div>
+              <button onClick={logout}>Logout</button>
+            </div>
+          )}
           <Router>
             <Routes>
               <Route path="/" element={<Home />} />
