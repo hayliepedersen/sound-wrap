@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
-import Home from './Home'
 
 function Artists() {
   const [searchKey, setSearchKey] = useState("");
@@ -13,7 +12,7 @@ function Artists() {
     e.preventDefault()
     const token = window.localStorage.getItem("token")
 
-    const {data} = await axios.get("https://api.spotify.com/v1/search", {
+    const { data } = await axios.get("https://api.spotify.com/v1/search", {
       headers: {
         Authorization: `Bearer ${token}`
       },
@@ -35,10 +34,10 @@ function Artists() {
   // Display the reccomended artists to the user
   const renderArtists = () => {
     return artists.slice(0, 8).map(artist => (
-        <div key={artist.id}>
-            {artist.images.length ? <img width={"100%"} src={artist.images[0].url} alt=""/> : <div>No Image</div>}
-            {artist.name}
-        </div>
+      <div key={artist.id}>
+        {artist.images.length ? <img width={"100%"} src={artist.images[0].url} alt="" /> : <div>No Image</div>}
+        {artist.name}
+      </div>
     ))
   }
 
@@ -49,13 +48,13 @@ function Artists() {
         <h2>Artist Reccomendation</h2>
         {!isSubmitted && <p>Enter your favorite artist:</p>}
         <form onSubmit={handleSubmit} id="searchArtists">
-          <input type="text" onChange={e => setSearchKey(e.target.value)}/>
+          <input type="text" onChange={e => setSearchKey(e.target.value)} />
           <button type={"submit"}>Search</button>
         </form>
         {isSubmitted && <p>You may also like: </p>}
         <div className="artistImages">
           {renderArtists()}
-         </div>
+        </div>
       </div>
     </>
   )

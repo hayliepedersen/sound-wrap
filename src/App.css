@@ -22,22 +22,22 @@
 }
 
 .artistImages img {
-  width: 100%;        
-  height: 80%;     
-  object-fit: cover;  
-  border-radius: 8px; 
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 body {
   position: relative;
-} 
+}
 
 .user-icon {
   position: absolute;
   top: 12px;
   right: 12px;
   width: 2%;
-  height: auto; 
+  height: auto;
   border-radius: 50px;
   cursor: pointer;
 }
