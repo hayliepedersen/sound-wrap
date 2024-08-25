@@ -39,4 +39,11 @@ body {
   width: 2%;
   height: auto; 
   border-radius: 50px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 30px;
+  right: 12px;
 }
