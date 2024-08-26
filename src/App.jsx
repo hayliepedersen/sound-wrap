@@ -73,14 +73,21 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <div className="App">
         <header className="App-header">
           <h1>Sound Wrap</h1>
-           {!isAuthenticated && <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} className="login">
+          {!isAuthenticated && <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} className="login">
             Login to Spotify
-            </a>}
+          </a>}
         </header>
       </div>
       {isAuthenticated &&
