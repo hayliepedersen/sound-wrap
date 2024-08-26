@@ -49,7 +49,8 @@ function Artists() {
         {!isSubmitted && <p>Enter your favorite artist:</p>}
         <form onSubmit={handleSubmit} id="searchArtists">
           <input type="text" onChange={e => setSearchKey(e.target.value)} />
-          <button type={"submit"}>Search</button>
+          <br/>
+          <button type={"submit"} className='search'>Search</button>
         </form>
         {isSubmitted && <p>You may also like: </p>}
         <div className="artistImages">

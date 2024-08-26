@@ -124,15 +124,15 @@ function Home() {
     <>
       <div className="Home">
         <Link to={"./Artists"}>Artist Reccomendation</Link >
-        {/*This will run the function using the inputted text*/}
+        <h2>Genre Search</h2>
         <form onSubmit={(inputGenre) => handleSearch(inputGenre)}>
           <input
             type="text"
-            placeholder="Enter genre"
             value={inputGenre}
             onChange={(e) => setInputGenre(e.target.value)}
           />
-          <button type="submit">Search</button>
+          <br/>
+          <button type="submit" className='search'>Search</button>
         </form>
       </div>
     </>
