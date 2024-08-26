@@ -78,10 +78,9 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h1>Sound Wrap</h1>
-          {!token ?
-            <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} className="login">Login to Spotify</a>
-            : <button onClick={logout}>Logout</button>
-          }
+           {!isAuthenticated && <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} className="login">
+            Login to Spotify
+            </a>}
         </header>
       </div>
       {isAuthenticated &&
@@ -96,7 +95,6 @@ function App() {
           </div>
           {profileClicked && (
             <div className="dropdown-content">
-              <div className='square'></div>
               <button onClick={logout}>Logout</button>
             </div>
           )}
