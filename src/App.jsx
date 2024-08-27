@@ -82,7 +82,7 @@ function App() {
 
   return (
     <>
-      <div className="App">
+      <div className="App" ref={dropdownRef}>
         <header className="App-header">
           <h1>Sound Wrap</h1>
           {!token ?
@@ -93,7 +93,7 @@ function App() {
       </div>
       {isAuthenticated &&
         <>
-          <div className="icon-container" ref={dropdownRef}>
+          <div className="icon-container">
             <img
               src={profileUrl}
               alt="User Icon"
