@@ -85,9 +85,10 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h1>Sound Wrap</h1>
-          {!isAuthenticated && <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} className="login">
-            Login to Spotify
-          </a>}
+          {!token ?
+            <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} className="login">Login to Spotify</a>
+            : profileClicked && <button onClick={logout} className="dropdown-content">Logout</button>
+          }
         </header>
       </div>
       {isAuthenticated &&
@@ -100,11 +101,6 @@ function App() {
               onClick={toggleDropdown}
             />
           </div>
-          {profileClicked && (
-            <div className="dropdown-content">
-              <button onClick={logout}>Logout</button>
-            </div>
-          )}
           <Router>
             <Routes>
               <Route path="/" element={<Home />} />
