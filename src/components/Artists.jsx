@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import backArrow from '../assets/back-arrow.png';
 
 function Artists() {
   const [searchKey, setSearchKey] = useState("");
@@ -44,7 +45,10 @@ function Artists() {
   return (
     <>
       <div className="Artists">
-        <Link to={"/"}>Home</Link >
+        <Link to={"/"}>
+          <img src={backArrow} alt="Back Arrow" className="home-image" />
+          Home
+        </Link >
         <h2>Artist Reccomendation</h2>
         {!isSubmitted && <p>Enter your favorite artist:</p>}
         <form onSubmit={handleSubmit} id="searchArtists">
