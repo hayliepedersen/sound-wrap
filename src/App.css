@@ -102,3 +102,15 @@ h3 {
   left: 12px;
   display: flex;
 }
+
+.menu-image {
+  filter: invert(1);
+  width: auto;
+  height: auto;
+  max-width: 15px;
+  max-height: 15px;
+  vertical-align: top;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+}

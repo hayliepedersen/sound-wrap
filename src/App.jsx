@@ -5,6 +5,7 @@ import './App.css'
 import Home from './components/Home'
 import Artists from './components/Artists'
 import logoutArrow from './assets/logout.png';
+import menu from './assets/menu.png';
 
 function App() {
   const CLIENT_ID = "bf129aa3857d4267b7c4577497863ede"
@@ -84,7 +85,10 @@ function App() {
     <>
       <div className="App" ref={dropdownRef}>
         <header className="App-header">
-          <h3>Sound Wrap</h3>
+          <h3>
+            <img src={menu} alt="Menu" className="menu-image" />
+            Sound Wrap
+          </h3>
           {!token ?
             <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} className="login">Login to Spotify</a>
             : profileClicked &&
