@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
-
+import linkArrow from '../assets/link-arrow.png';
 
 function Home() {
   const [playlists, setPlaylists] = useState([]);
@@ -123,7 +123,10 @@ function Home() {
   return (
     <>
       <div className="Home">
-        <Link to={"./Artists"}>Artist Reccomendation</Link >
+        <Link to={"./Artists"}>
+          <img src={linkArrow} alt="Link Arrow" className="link-image" />
+          Artist Reccomendation
+          </Link >
         <h2>Genre Search</h2>
         <form onSubmit={(inputGenre) => handleSearch(inputGenre)}>
           <input
