@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import linkArrow from '../assets/link-arrow.png';
 
@@ -126,7 +126,7 @@ function Home() {
         <Link to={"./Artists"}>
           <img src={linkArrow} alt="Link Arrow" className="link-image" />
           Artist Reccomendation
-          </Link >
+        </Link >
         <h2>Genre Search</h2>
         <form onSubmit={(inputGenre) => handleSearch(inputGenre)}>
           <input
@@ -134,7 +134,7 @@ function Home() {
             value={inputGenre}
             onChange={(e) => setInputGenre(e.target.value)}
           />
-          <br/>
+          <br />
           <button type="submit" className='search'>Search</button>
         </form>
       </div>

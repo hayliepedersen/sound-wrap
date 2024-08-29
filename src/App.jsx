@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import axios from 'axios'
 import './App.css'
 import Home from './components/Home'
@@ -18,6 +18,7 @@ function App() {
   const [profileUrl, setProfileUrl] = useState("")
   const [profileClicked, setProfileClicked] = useState(false)
   const dropdownRef = useRef(null);
+  const [menuClicked, setMenuClicked] = useState(false)
 
   useEffect(() => {
     const hash = window.location.hash
@@ -71,6 +72,7 @@ function App() {
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setProfileClicked(false);
+      document.getElementById("sideNav").style.width = "0";
     }
   };
 
@@ -81,14 +83,15 @@ function App() {
     };
   }, []);
 
+  const toggleMenu = () => {
+    document.getElementById("sideNav").style.width = "450px";
+  };
+
   return (
     <>
       <div className="App" ref={dropdownRef}>
         <header className="App-header">
-          <h3>
-            <img src={menu} alt="Menu" className="menu-image" />
-            Sound Wrap
-          </h3>
+          {!isAuthenticated && <h1>Sound Wrap</h1>}
           {!token ?
             <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} className="login">Login to Spotify</a>
             : profileClicked &&
@@ -101,6 +104,13 @@ function App() {
       </div>
       {isAuthenticated &&
         <>
+          <h3>
+            <img src={menu} alt="Menu" className="menu-image" onClick={toggleMenu} />
+            Sound Wrap
+          </h3>
+          <div id="sideNav">
+            {menuClicked && <div className="sidebar"></div>}
+          </div>
           <div className="icon-container">
             <img
               src={profileUrl}
