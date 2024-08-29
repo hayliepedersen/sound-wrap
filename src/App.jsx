@@ -7,6 +7,7 @@ import Artists from './components/Artists'
 import logoutArrow from './assets/logout.png';
 import menu from './assets/menu.png';
 import linkArrow from './assets/link-arrow.png';
+import backArrow from './assets/back-arrow.png';
 
 function App() {
   const CLIENT_ID = "bf129aa3857d4267b7c4577497863ede"
@@ -19,7 +20,6 @@ function App() {
   const [profileUrl, setProfileUrl] = useState("")
   const [profileClicked, setProfileClicked] = useState(false)
   const dropdownRef = useRef(null);
-  const [menuClicked, setMenuClicked] = useState(false)
 
   useEffect(() => {
     const hash = window.location.hash
@@ -123,8 +123,11 @@ function App() {
               <Route path="/artists" element={<Artists />} />
             </Routes>
             <div id="sideNav">
-              {menuClicked && <div className="sidebar"></div>}
-              <Link to={"./Artists"} className="artist-link">
+              <Link to="/">
+                <img src={backArrow} alt="Back Arrow" className="home-image" />
+                Home
+              </Link >
+              <Link to="/artists" className="artist-link">
                 <img src={linkArrow} alt="Link Arrow" className="link-image" />
                 Artist Reccomendation
               </Link >
