@@ -18,7 +18,6 @@ function App() {
   const [profileClicked, setProfileClicked] = useState(false)
   const dropdownRef = useRef(null);
 
-
   useEffect(() => {
     const hash = window.location.hash
     let storedToken = window.localStorage.getItem("token")
@@ -85,10 +84,10 @@ function App() {
     <>
       <div className="App" ref={dropdownRef}>
         <header className="App-header">
-          <h1>Sound Wrap</h1>
+          <h3>Sound Wrap</h3>
           {!token ?
             <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} className="login">Login to Spotify</a>
-            : profileClicked && 
+            : profileClicked &&
             <button onClick={logout} className="dropdown-content">
               Logout
               <img src={logoutArrow} alt="Logout Arrow" className="logout-image" />
