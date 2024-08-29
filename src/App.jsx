@@ -6,6 +6,7 @@ import Home from './components/Home'
 import Artists from './components/Artists'
 import logoutArrow from './assets/logout.png';
 import menu from './assets/menu.png';
+import linkArrow from './assets/link-arrow.png';
 
 function App() {
   const CLIENT_ID = "bf129aa3857d4267b7c4577497863ede"
@@ -108,9 +109,6 @@ function App() {
             <img src={menu} alt="Menu" className="menu-image" onClick={toggleMenu} />
             Sound Wrap
           </h3>
-          <div id="sideNav">
-            {menuClicked && <div className="sidebar"></div>}
-          </div>
           <div className="icon-container">
             <img
               src={profileUrl}
@@ -124,6 +122,13 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/artists" element={<Artists />} />
             </Routes>
+            <div id="sideNav">
+              {menuClicked && <div className="sidebar"></div>}
+              <Link to={"./Artists"} className="artist-link">
+                <img src={linkArrow} alt="Link Arrow" className="link-image" />
+                Artist Reccomendation
+              </Link >
+            </div>
           </Router>
         </>
       }

@@ -121,14 +121,14 @@ h3 {
   top: 58px;
   left: 12px;
   width: 0;
-  height: 100%; 
-  position: fixed; 
+  height: 100%;
+  position: fixed;
   top: 0;
   left: 0;
   background-color: #111;
   overflow-x: hidden;
   transition: .5s;
-  padding-top: 60px;  
+  padding-top: 60px;
   border-radius: 40px;
   margin-left: -100px;
 }
