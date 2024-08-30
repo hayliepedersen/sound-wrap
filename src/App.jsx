@@ -127,7 +127,7 @@ function App() {
                 <img src={menu} alt="Menu" className="menu-image"/>
                 Sound Wrap
               </h3>
-              <hr color="#1d9b4b" className="rounded"/>
+              <hr color="#1DB954" className="rounded"/>
               <Link to="/" className='home-link'>
                 <img src={home} alt="Back Arrow" className="home-image" />
                 Home

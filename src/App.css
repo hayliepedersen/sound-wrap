@@ -64,7 +64,7 @@ body {
 }
 
 .home-image {
-  filter: invert(1);
+  filter: invert(82%) sepia(80%) saturate(310%) hue-rotate(55deg) brightness(90%) contrast(85%); 
   width: auto;
   height: auto;
   max-width: 16px;
@@ -85,7 +85,7 @@ body {
 }
 
 .link-image {
-  filter: invert(1);
+  filter: invert(82%) sepia(80%) saturate(310%) hue-rotate(55deg) brightness(90%) contrast(85%); 
   width: auto;
   height: auto;
   max-width: 16px;
@@ -105,7 +105,7 @@ h3 {
 }
 
 .menu-image {
-  filter: invert(1);
+  filter: invert(82%) sepia(80%) saturate(310%) hue-rotate(55deg) brightness(90%) contrast(85%); 
   width: auto;
   height: auto;
   max-width: 15px;
@@ -153,10 +153,10 @@ h3 {
 
 hr.rounded {
   width: 330px;
-  border-top: -14px solid #1d9b4b;
+  border-top: .000px solid #1DB954;
   border-radius: 2px;
   margin: 20px auto 20px 110px;
   margin-top: -2px;
-  background-color: #1d9b4b;
+  background-color: #1DB954;
   box-sizing: content-box;
 }
