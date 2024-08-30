@@ -123,7 +123,12 @@ function App() {
               <Route path="/artists" element={<Artists />} />
             </Routes>
             <div id="sideNav">
-              <Link to="/" className='home-link'> 
+              <h3 className="sidebar-menu">
+                <img src={menu} alt="Menu" className="menu-image"/>
+                Sound Wrap
+              </h3>
+              <hr color="#1d9b4b" className="rounded"/>
+              <Link to="/" className='home-link'>
                 <img src={home} alt="Back Arrow" className="home-image" />
                 Home
               </Link >

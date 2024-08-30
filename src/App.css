@@ -146,3 +146,17 @@ h3 {
   padding-left: 10px;
   display: block;
 }
+
+.sidebar-menu {
+  margin-left: 108px;
+}
+
+hr.rounded {
+  width: 330px;
+  border-top: -14px solid #1d9b4b;
+  border-radius: 2px;
+  margin: 20px auto 20px 110px;
+  margin-top: -2px;
+  background-color: #1d9b4b;
+  box-sizing: content-box;
+}
