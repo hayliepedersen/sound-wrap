@@ -19,7 +19,6 @@ function Home() {
         }
       });
 
-      console.log(data.items)
       setPlaylists(data.items)
 
     } catch (error) {
@@ -38,12 +37,25 @@ function Home() {
         },
       });
 
-      console.log(data.items)
-      setTracks(data.items)
+      return data.items;
 
     } catch (error) {
       console.error("Error fetching playlist tracks");
     }
+  };
+
+  // For every playlist in playlists, gets the tracks using the playlist id
+  const searchPlaylistsForTracks = async () => {
+    let allTracks = [];
+
+    for (const playlistKey in playlists) {
+      const playlist = playlists[playlistKey];
+      const tracksFromPlaylist = await getPlaylistTracks(playlist.id);
+      allTracks.push(...tracksFromPlaylist);
+    }
+
+    setTracks(allTracks);  
+    console.log(allTracks);
   };
 
   // Fetches the data for an artist, to be used for genre matching
@@ -63,20 +75,6 @@ function Home() {
       console.error("Error fetching artist details");
       return null;
     }
-  };
-
-  // For every playlist in playlists, gets the tracks using the playlist id
-  const searchPlaylistsForTracks = async () => {
-    let allTracks = {};
-
-    for (const playlistKey in playlists) {
-      const playlist = playlists[playlistKey];
-      const playlistTracks = await getPlaylistTracks(playlist.id);
-
-      allTracks = { ...allTracks, ...playlistTracks };
-    }
-
-    setTracks(allTracks);
   };
 
   const searchTracksForArtists = async (inputGenre) => {
