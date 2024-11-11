@@ -5,11 +5,10 @@ function Home() {
   const [playlists, setPlaylists] = useState([]);
   const [tracks, setTracks] = useState([]);
   const [inputGenre, setInputGenre] = useState("");
-  const [genreMatches, setGenreMatches] = useState([]);
+  // const [genreMatches, setGenreMatches] = useState([]);
 
   // Get all of the user's playlists
-  const getPlaylists = async (e) => {
-    e.preventDefault()
+  const getPlaylists = async () => {
     const token = window.localStorage.getItem("token")
 
     try {
@@ -40,7 +39,7 @@ function Home() {
       return data.items;
 
     } catch (error) {
-      console.error("Error fetching playlist tracks");
+      console.error("Error fetching playlist tracks: " + error);
     }
   };
 
@@ -55,7 +54,7 @@ function Home() {
     }
 
     setTracks(allTracks);  
-    console.log(allTracks);
+    console.log(allTracks)
   };
 
   // Fetches the data for an artist, to be used for genre matching
@@ -72,13 +71,14 @@ function Home() {
       return data;
 
     } catch (error) {
-      console.error("Error fetching artist details");
+      console.error("Error fetching artist details: " + error);
       return null;
     }
   };
 
   const searchTracksForArtists = async (inputGenre) => {
     const genreMatches = [];
+    console.log(tracks)
 
     for (const trackKey in tracks) {
       const track = tracks[trackKey];
@@ -99,13 +99,13 @@ function Home() {
       }
     }
 
-    setGenreMatches(genreMatches);
+    // setGenreMatches(genreMatches);
   };
 
   // To be called when the input is submitted
-  const handleSearch = async (e) => {
-    await getPlaylists(e);
-    searchTracksForArtists(e);
+  const handleSearch = async (inputGenre) => {
+    await getPlaylists();
+    searchTracksForArtists(inputGenre);
   };
 
   // Handles playlists
@@ -113,6 +113,7 @@ function Home() {
     if (playlists.length > 0) {
       setPlaylists(playlists)
       searchPlaylistsForTracks();
+      searchTracksForArtists();
     }
   }, [playlists]);
 
