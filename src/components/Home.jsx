@@ -118,8 +118,7 @@ const Home = () => {
         };
       }
       return null;
-    } catch (error) {
-      console.error("Error fetching artist details:", error);
+    } catch {
       return null;
     }
   };
@@ -128,6 +127,7 @@ const Home = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setIsFinished(false);
     setError("");
     setGenreMatches([]);
     setPlaylistRecommendation(null);
@@ -155,7 +155,7 @@ const Home = () => {
         flatTracks,
         getArtistDetails,
         5,
-        1000
+        500
       );
 
       // Filter out null results and set matches
