@@ -17,8 +17,8 @@ const Home = () => {
   const batchProcess = async (
     items,
     processFn,
-    batchSize = 5,
-    delayMs = 500
+    batchSize = 10,
+    delayMs = 250
   ) => {
     const results = [];
 
@@ -115,10 +115,15 @@ const Home = () => {
           artist: data.name,
           genres: data.genres,
           albumCover: track.track.album.images[0]?.url,
+
+          spotifyUrls: {
+            artist: data.external_urls.spotify,
+            playlist: track.playlist.external_urls?.spotify,
+          },
         };
       }
-      return null;
-    } catch {
+    } catch (error) {
+      console.error("Error fetching artist details:", error);
       return null;
     }
   };
@@ -143,7 +148,7 @@ const Home = () => {
         userPlaylists,
         getPlaylistTracks,
         3,
-        1000
+        500
       );
 
       // Flatten tracks array
@@ -154,8 +159,8 @@ const Home = () => {
       const matchResults = await batchProcess(
         flatTracks,
         getArtistDetails,
-        5,
-        500
+        10,
+        250
       );
 
       // Filter out null results and set matches
@@ -318,18 +323,47 @@ const Home = () => {
                   />
                 )}
                 <div>
-                  <h3 style={{ fontWeight: "600", marginBottom: "4px" }}>
-                    {match.track}
-                  </h3>
                   <p style={{ fontSize: "14px", color: "#666" }}>
-                    {match.artist}
+                    <a
+                      href={match.spotifyUrls.artist}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "#666", textDecoration: "none" }}
+                    >
+                      {match.artist}
+                    </a>
                   </p>
                   <p style={{ fontSize: "14px", color: "#666" }}>
-                    Playlist: {match.playlist}
+                    Playlist:{" "}
+                    <a
+                      href={match.spotifyUrls.playlist}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "#666", textDecoration: "none" }}
+                    >
+                      {match.playlist}
+                    </a>
                   </p>
                   <p style={{ fontSize: "14px", color: "#888" }}>
                     Genres: {match.genres.join(", ")}
                   </p>
+                  <div
+                    style={{
+                      marginTop: "8px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Black.png"
+                      alt="Spotify"
+                      style={{ 
+                        height: "20px",
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
