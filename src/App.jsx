@@ -11,7 +11,7 @@ import musicNote from './assets/musical-note.png';
 
 function App() {
   const CLIENT_ID = "bf129aa3857d4267b7c4577497863ede"
-  const REDIRECT_URI = "http://localhost:5173"
+  const REDIRECT_URI = "https://soundwrap.vercel.app"
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
 
