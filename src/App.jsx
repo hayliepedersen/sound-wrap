@@ -72,7 +72,10 @@ function App() {
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setProfileClicked(false);
-      document.getElementById("sideNav").style.width = "0";
+      const sideNav = document.getElementById("sideNav");
+      if (sideNav) {
+        sideNav.style.width = "0";
+      }
     }
   };
 
