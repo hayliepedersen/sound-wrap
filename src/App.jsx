@@ -15,7 +15,7 @@ function App() {
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
 
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [profileUrl, setProfileUrl] = useState("")
   const [profileClicked, setProfileClicked] = useState(false)
