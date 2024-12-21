@@ -95,7 +95,8 @@ function App() {
       <div className="App" ref={dropdownRef}>
         <header className="App-header">
           {!isAuthenticated && <h1>Sound Wrap</h1>}
-          {!token === "" ?
+          {console.log('Rendering login section, token=', token)}
+          {!token ?
             <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} className="login">Login to Spotify</a>
             : profileClicked &&
             <button onClick={logout} className="dropdown-content">
