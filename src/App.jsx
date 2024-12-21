@@ -30,11 +30,10 @@ function App() {
 
       window.location.hash = ""
       window.localStorage.setItem("token", storedToken)
+      setIsAuthenticated(true)
     }
 
     setToken(storedToken)
-    setIsAuthenticated(true)
-
   }, [])
 
   const logout = () => {
