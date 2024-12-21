@@ -266,7 +266,7 @@ const Home = () => {
           <p>
             Processing: {progress.current} of {progress.total}
           </p>
-          {progress.total > 20 && progress.total < 50 && (
+          {progress.current >= 20 && progress.current <= 50 && (
             <p>
               Whew! You listen to a lot of songs
             </p>
