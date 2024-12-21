@@ -34,10 +34,7 @@ function App() {
         setToken(storedToken)
         setIsAuthenticated(true)
       }
-    } else if (storedToken) {
-      setToken(storedToken)
-      setIsAuthenticated(true)
-    }
+    } 
   }, [])
 
   const logout = () => {
