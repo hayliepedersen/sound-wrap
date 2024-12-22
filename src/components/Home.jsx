@@ -266,24 +266,25 @@ const Home = () => {
           <p>
             Processing: {progress.current} of {progress.total}
           </p>
-          {progress.current >= 20 && progress.current <= 70 && (
+          {progress.current >= 50 && progress.current <= 150 && (
             <p>
               Whew! You listen to a lot of songs.
             </p>
           )}
-          {progress.current >= 90 && progress.current <= 140 && (
+          {progress.current > 150 && progress.current <= 250 && (
             <p>
-            Too much music? No such thing!
+            Are these all your playlists? Wow!
             </p> 
           )}
-          {progress.current >= 160 && progress.current <= 230 && (
-            <p>
-            Are these all your playlists? Impressive!
-            </p> 
-          )}
-          {progress.current >= 250 && progress.current <= 350 && (
+          {progress.current > 250 && progress.current <= 350 && (
             <p>
             Over 250 songs already? This may take a minute.
+            </p> 
+          )}
+
+          {progress.current > 350 && (
+            <p>
+            Too much music? No such thing!
             </p> 
           )}
           <div
