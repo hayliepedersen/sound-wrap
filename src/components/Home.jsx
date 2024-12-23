@@ -345,6 +345,9 @@ const Home = () => {
                 )}
                 <div>
                   <p style={{ fontSize: "14px", color: "#666" }}>
+                    {match.track}
+                  </p>
+                  <p style={{ fontSize: "14px", color: "#666" }}>
                     <a
                       href={match.spotifyUrls.artist}
                       target="_blank"
