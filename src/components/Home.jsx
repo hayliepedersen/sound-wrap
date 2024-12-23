@@ -344,7 +344,7 @@ const Home = () => {
                   />
                 )}
                 <div>
-                  <p style={{ fontSize: "14px", color: "#666" }}>
+                  <p style={{ fontSize: "16px", color: "#888" }}>
                     {match.track}
                   </p>
                   <p style={{ fontSize: "14px", color: "#666" }}>
