@@ -13,7 +13,7 @@ Currently, soundwrap operates in Spotify's developer mode. This means only users
 
 ## Video Demo
 
-[See soundwrap in action!](https://drive.google.com/file/d/17TR2ThW3qwyU6_BqYycsbRlNoyvJ3c6_/view?usp=sharing)
+[See soundwrap in action!](https://drive.google.com/file/d/1bKUMqcpB6fJIAKKP-3Y9VM6nRU2TNi7g/view?usp=sharing)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
